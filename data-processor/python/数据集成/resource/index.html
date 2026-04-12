@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>商品详情页 - 测试埋点</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#E94560',
+                        secondary: '#1A1A2E',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 font-sans">
+<!-- 导航栏 -->
+<header class="bg-white shadow-sm">
+    <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+        <h1 class="text-xl font-bold text-primary">测试商城</h1>
+        <nav>
+            <ul class="flex space-x-6">
+                <li><a href="#" class="text-gray-700 hover:text-primary">首页</a></li>
+                <li><a href="#" class="text-gray-700 hover:text-primary">商品</a></li>
+                <li><a href="#" class="text-gray-700 hover:text-primary">购物车</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<!-- 主内容 -->
+<main class="container mx-auto px-4 py-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- 商品图片 -->
+        <div class="bg-white rounded-lg overflow-hidden shadow-sm">
+            <img src="https://picsum.photos/seed/product/600/800" alt="测试商品" class="w-full h-auto">
+        </div>
+
+        <!-- 商品信息 -->
+        <div class="bg-white rounded-lg p-6 shadow-sm">
+            <h2 class="text-2xl font-bold mb-2">测试商品</h2>
+            <div class="flex items-center mb-4">
+                <div class="flex text-yellow-400">
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star-half-o"></i>
+                </div>
+                <span class="ml-2 text-gray-500">(120条评价)</span>
+            </div>
+
+            <div class="mb-4">
+                <span class="text-2xl font-bold text-primary">¥199.00</span>
+                <span class="ml-2 text-gray-400 line-through">¥299.00</span>
+            </div>
+
+            <div class="mb-6">
+                <p class="text-gray-700">这是一个测试商品，用于演示埋点功能。点击下方按钮触发埋点数据采集。</p>
+            </div>
+
+            <div class="flex space-x-4">
+                <button id="add-to-cart-btn" class="flex-1 py-3 px-4 bg-primary text-white rounded-md font-medium hover:bg-primary/90 transition-colors">
+                    <i class="fa fa-shopping-cart mr-2"></i> 加入购物车
+                </button>
+                <button id="buy-now-btn" class="flex-1 py-3 px-4 bg-secondary text-white rounded-md font-medium hover:bg-secondary/90 transition-colors">
+                    <i class="fa fa-bolt mr-2"></i> 立即购买
+                </button>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- 埋点脚本 -->
+<script>
+    // 埋点数据采集实现
+    class ProductTracker {
+        constructor() {
+            this.productId = "test123";
+            this.pageId = "product-detail";
+            this.entryTime = Date.now();
+
+            // 初始化时记录页面浏览
+            this.trackPageView();
+
+            // 监听加入购物车按钮
+            document.getElementById('add-to-cart-btn').addEventListener('click', this.trackAddToCart.bind(this));
+
+            // 监听立即购买按钮
+            document.getElementById('buy-now-btn').addEventListener('click', this.trackBuyNow.bind(this));
+
+            // 监听页面卸载事件
+            window.addEventListener('beforeunload', this.trackExit.bind(this));
+        }
+
+        // 记录页面浏览事件
+        trackPageView() {
+            const eventData = {
+                event_type: 'product_detail_view',
+                timestamp: this.entryTime,
+                user_id: this.getUserId(),
+                session_id: this.getSessionId(),
+                page_id: this.pageId,
+                product_id: this.productId,
+                category: "测试品类",
+                price: 199.00,
+                view_time: this.entryTime
+            };
+
+            this.sendEvent(eventData);
+        }
+
+        // 记录加入购物车事件
+        trackAddToCart() {
+            const eventData = {
+                event_type: 'add_to_cart',
+                timestamp: Date.now(),
+                user_id: this.getUserId(),
+                session_id: this.getSessionId(),
+                page_id: this.pageId,
+                product_id: this.productId,
+                category: "测试品类",
+                price: 199.00,
+                quantity: 1
+            };
+
+            this.sendEvent(eventData);
+            this.showToast("已添加到购物车");
+        }
+
+        // 记录立即购买事件
+        trackBuyNow() {
+            const eventData = {
+                event_type: 'buy_now',
+                timestamp: Date.now(),
+                user_id: this.getUserId(),
+                session_id: this.getSessionId(),
+                page_id: this.pageId,
+                product_id: this.productId,
+                category: "测试品类",
+                price: 199.00,
+                quantity: 1
+            };
+
+            this.sendEvent(eventData);
+            this.showToast("正在前往结算...");
+        }
+
+        // 记录退出页面事件
+        trackExit() {
+            const exitTime = Date.now();
+            const stayDuration = exitTime - this.entryTime;
+
+            const eventData = {
+                event_type: 'exit_detail_page',
+                timestamp: exitTime,
+                user_id: this.getUserId(),
+                session_id: this.getSessionId(),
+                page_id: this.pageId,
+                product_id: this.productId,
+                entry_time: this.entryTime,
+                exit_time: exitTime,
+                stay_duration: stayDuration
+            };
+
+            // 使用同步请求确保在页面卸载前发送
+            console.log("同步发送埋点数据:", JSON.stringify(eventData, null, 2));
+        }
+
+        // 修改前端sendEvent方法，添加mode: 'cors'
+        sendEvent(eventData) {
+        console.log("发送埋点数据:", JSON.stringify(eventData));
+        fetch('http://localhost:5000/api/track/event', {
+           method: 'POST',
+           mode: 'cors',  // 允许跨域
+           headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify(eventData)
+        })
+        .then(response => {
+            console.log("响应状态:", response.status);
+           return response.json();
+        })
+         .then(data => console.log("API响应:", data))
+         .catch(error => console.error("发送失败:", error));
+       }
+
+        // 获取用户ID(从cookie或localStorage获取)
+        getUserId() {
+            // 实际实现中从cookie或localStorage获取
+            return "u123456";
+        }
+
+        // 获取会话ID
+        getSessionId() {
+            // 实际实现中从cookie或生成新会话
+            return "s789012";
+        }
+
+        // 显示提示消息
+        showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'fixed top-4 right-4 bg-gray-800 text-white px-4 py-2 rounded-md shadow-lg z-50';
+            toast.textContent = message;
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transition = 'opacity 0.5s';
+                setTimeout(() => {
+                    document.body.removeChild(toast);
+                }, 500);
+            }, 2000);
+        }
+    }
+
+    // 页面加载完成后初始化埋点
+    document.addEventListener('DOMContentLoaded', () => {
+        window.productTracker = new ProductTracker();
+    });
+</script>
+</body>
+</html>

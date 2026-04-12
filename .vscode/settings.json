@@ -1,0 +1,8 @@
+{
+  "java.configuration.updateBuildConfiguration": "automatic",
+  "java.compile.nullAnalysis.mode": "automatic",
+  "files.watcherExclude": {
+    "**/target": true
+  },
+  "java.format.settings.url": ".vscode/java-formatter.xml"
+}

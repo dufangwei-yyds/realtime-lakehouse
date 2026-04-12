@@ -1,0 +1,1 @@
+select * from erp_db.m_dim;

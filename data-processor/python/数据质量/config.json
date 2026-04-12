@@ -1,0 +1,33 @@
+{
+    "hdfs_namenode": "192.168.63.128:8020",
+    "paimon_warehouse": "/paimon/live_dw_03",
+    "ods_database": "ods",
+    "mysql_host": "192.168.0.102",
+    "mysql_port": 3306,
+    "mysql_user": "root",
+    "mysql_password": "Dfw920130Q520,",
+    "mysql_database": "live",
+    "kafka_bootstrap": "192.168.63.128:9092",
+    "monitor_interval": 30,
+    "thresholds": {
+        "cdc_lag_seconds": 60,
+        "data_consistency_error": 0.01,
+        "file_count_growth": 100,
+        "snapshot_age_hours": 2
+    },
+    "alert": {
+        "email": {
+            "enabled": false,
+            "smtp_server": "smtp.example.com",
+            "smtp_port": 587,
+            "username": "alert@example.com",
+            "password": "your_password",
+            "receivers": ["admin@example.com"]
+        },
+        "webhook": {
+            "enabled": false,
+            "dingtalk_webhook": "https://oapi.dingtalk.com/robot/send?access_token=xxx",
+            "wechat_webhook": "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=xxx"
+        }
+    }
+}
