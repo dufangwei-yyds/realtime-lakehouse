@@ -56,11 +56,13 @@
 
 ## AI 代码编辑器
 
-| 工具             | 简介                |
-| ---------------- | ------------------- |
-| Cursor           | AI 驱动的代码编辑器 |
-| Trae             | AI 驱动的代码编辑器 |
-| **Antigravity** | AI 驱动的代码编辑器 |
+| 工具              | 简介                       |
+| ---------------- | ---------------------------|
+| Cursor           | 主力狙击手（核心代码攻坚）      |
+| Trae Solo        | 先遣部队（出原型、搞部署）      |
+| WorkBuddy        | 金牌秘书（出方案）             |
+| Qorder           | 外包团队（自主完成独立子模块开发）|
+| Antigravity      | 预警机（全局扫描与审计）        |
 
 ---
 
@@ -68,11 +70,11 @@
 
 > 快速做网站和应用
 
-| 工具          | 简介       |
-| ------------- | ---------- |
-| **Bolt.new** | 零代码平台 |
-| Lovable       | 零代码平台 |
-| 秒哒          | 零代码平台 |
+| 工具          | 简介                                    |
+| -------------| ----------------------------------------|
+| Bolt.new     | 原型设计和快速验证技术想法的最佳工具, 国外     |
+| 秒悟          | 做内部办公系统、简单的SaaS原型或个人作品集,国内|
+| 秒哒          | 做轻量应用、利用百度生态, 国内               |
 
 ---
 
@@ -115,6 +117,7 @@
 | Claude Code | `curl -fsSL https://claude.ai/install.sh \| bash` |
 | Gemini CLI  | `npm install -g @google/gemini-cli`              |
 | OpenCode    | `curl -fsSL https://opencode.ai/install \| bash`  |
+...
 
 ---
 
@@ -165,7 +168,7 @@ AITDK、Monica、Web To MCP、百度文心助手
 
 | Agent    | 简介     |
 | -------- | -------- |
-| MaxClaw  | AI Agent |
+| QClaw  | AI Agent   |
 | OpenClaw | AI Agent |
 
 ---

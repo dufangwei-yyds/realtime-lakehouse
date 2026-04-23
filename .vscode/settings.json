@@ -4,5 +4,6 @@
   "files.watcherExclude": {
     "**/target": true
   },
-  "java.format.settings.url": ".vscode/java-formatter.xml"
+  "java.format.settings.url": ".vscode/java-formatter.xml",
+  "kafka.clusters.selected": "Kafka-MTkyLjE2OC42My4xMjg6OTA5Mg"
 }
